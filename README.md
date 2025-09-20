@@ -112,17 +112,9 @@ MIT License. See [LICENSE](LICENSE) file.
 
 ---
 
-## Acknowledgements
-- Django framework
-- Google Contacts API
-- Community contributors
-
----
-
 ## To Do
 - Dashboard with visual statistics
 - UI tweaks
-- 
 
 ---
 
