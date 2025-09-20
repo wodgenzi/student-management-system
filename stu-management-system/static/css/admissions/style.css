@@ -1,0 +1,328 @@
+.sc-container {
+    display: flex;
+    height: auto;
+    align-items: stretch;
+    background: none;
+    margin: 30px 30px 0;
+    padding: 30px 10px 0;
+    column-gap: 10px;
+}
+
+#sc-content {
+    width: 100%;
+    height: 80vh;
+    margin-left: 250px;
+    transition: margin-left 0.5s;
+}
+ul {
+    list-style: none;
+}
+
+#main-sc-contents {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 16px;
+    padding-top: 10px;
+    margin-left: 20px;
+    align-items: center;
+    height: 100%;
+}
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    width: 100%;
+    gap: 10px;
+    align-items: center;
+}
+
+.table-header h1 {
+    color: #ff8989;
+    min-width: fit-content;
+}
+.data-table {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+    padding: 14px;
+    overflow: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: sans-serif;
+    font-size: 14px;
+    table-layout: fixed;
+}
+
+th, td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 2px dotted #ddd;
+}
+
+th {
+    padding-top: 20px;
+    font-weight: 600;
+    color: #333;
+    cursor: pointer;
+}
+
+tr:hover:not(.details) {
+  background-color: #e6e6e6;
+}
+
+#enrollments-table {
+    min-width: 1000px;
+    overflow-x: scroll;
+    user-select: none;
+}
+#students-data-table {
+    min-width: 1000px;
+    overflow-x: scroll;
+    user-select: none;
+}
+.details {
+  background-color: #fafafa;
+  font-size: 13px;
+  color: #555;
+}
+
+.details td {
+  border-top: none;
+  border-bottom: 1px solid #a100ba;
+}
+
+
+.enrollment-status div .selected {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    font-weight: bold;
+}
+
+input[data-value="Completed"] {
+    color: #009a48;
+}
+
+input[data-value="Hold"] {
+    color: #009f92;
+}
+
+input[data-value="Pending"] {
+    color: #bd7b00;
+}
+
+input[data-value="Left"] {
+    color: #ff0000;
+}
+.button-01.active:hover,
+.button-01.active {
+    background-color: rgba(var(--primary-color-rgb), 0.55);
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.button-01:hover {
+    background-color: rgba(var(--primary-color-rgb), 0.55) !important;
+    color: #fff;
+    box-shadow: 0 2px 6px rgba(var(--primary-color-rgb), 0.2);
+    transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
+/* Modal container styles */
+.modal-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    overflow: hidden; /* Prevent background scrolling */
+}
+
+/* Modal content styles */
+.modal-content {
+    background-color: white;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 85vh; /* Slightly smaller to ensure it fits */
+    overflow-y: auto; /* Enable vertical scrolling */
+    position: relative;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin: 10px; /* Add some margin for very small screens */
+}
+
+/* Form styles */
+.modal-container div form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Ensure form elements don't overflow */
+.modal-container div form .fieldWrapper {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+/* Input and select styles */
+.modal-container div form input,
+.modal-container div form select {
+    width: fit-content;
+    max-width: 300px;
+    box-sizing: border-box;
+}
+
+/* Responsive adjustments */
+@media (max-height: 600px) {
+    .modal-content {
+        max-height: 80vh;
+        padding: 15px;
+    }
+
+    .modal-container div form {
+        gap: 5px;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-content {
+        width: 95%;
+        padding: 15px;
+    }
+
+    .modal-container div form .fieldWrapper {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .modal-container div form input,
+    .modal-container div form select {
+        margin-left: 0;
+        margin-top: 5px;
+        width: 100%;
+    }
+
+    .modal-container div form button {
+        align-self: center;
+    }
+}
+#sc-sidebar {
+    position: absolute;
+    min-width: 250px;
+    background-color: white;
+    border-radius: 13px;
+    padding: 0 10px 0;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+    height: 80vh;
+    left: 30px;
+    transition: left 0.5s ease;
+    z-index: 1;
+}
+@media (max-width: 600px) {
+    #sc-sidebar {
+        position: absolute;
+        z-index: 1;
+    }
+}
+.sc-sidebar-links {
+    list-style: none;
+    padding: 0;
+}
+
+.sc-sidebar-links li {
+    border-radius: 10px;
+    font-size: large;
+    box-sizing: border-box;
+}
+
+.sc-sidebar-links li:hover, .sc-sidebar-links li:focus {
+    background-color: rgba(var(--primary-color-rgb), 0.1);
+    cursor: pointer;
+}
+
+.sc-sidebar-links li a {
+    display: block;
+    padding: 15px 0 15px 0;
+    color: black;
+    border-radius: 10px;
+    text-align: center;
+}
+
+
+.sc-sidebar-links li a.active {
+    background-color: var(--primary-color);
+    color: white;
+    transition: color 0.2s, background-color 0.2s;
+}
+
+.logged-in {
+    position: absolute;
+    bottom: 15px;
+    left: 10px;
+    font-size: small;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.courses_buttons {
+    display: flex;
+    gap: 5px;
+}
+
+
+.search-bar-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.search-bar {
+    padding: 10px 8px 10px 15px;
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 30px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+    background: white;
+}
+
+.search-icon {
+  position: absolute;
+  right: 8px;
+  top: 55%;
+  transform: translateY(-50%);
+  pointer-events: none; /* allows clicking input */
+}
+
+#enrollments-filter {
+    position: absolute;
+    right: 50px;
+    top: 50px;
+    background: white;
+    padding: 10px 10px 10px 10px;
+    border: 2px solid;
+    border-radius: 5px;
+    z-index: 1;
+}
+
+.button-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: inherit;
+}

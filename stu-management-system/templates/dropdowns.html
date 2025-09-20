@@ -1,0 +1,130 @@
+    <style>
+        .drpdwn {
+            display: flex;
+            flex-flow: column nowrap;
+            border: 1px solid;
+            width: fit-content;
+        }
+
+        .drpdwn .inpt-wrapper {
+            display: block;
+            cursor: pointer;
+        }
+
+        .drpdwn .inpt-wrapper input {
+            position: relative;
+            background: #555555;
+        }
+
+        .drpdwn-optns li {
+            cursor: pointer;
+        }
+
+        #main-selected {
+            z-index: -1;
+        }
+
+    </style>
+
+    <div class="drpdwn fixed shut">
+    <span class="inpt-wrapper" style="display:block; cursor:pointer;">
+        <input class="main-selected" type="text" value="Test" disabled style="z-index: -1;">
+    </span>
+    <ul class="drpdwn-optns" style="display: none;">
+        <li data-value="Options1">Options1</li>
+        <li data-value="Options2">Options2</li>
+        <li data-value="Options3">Options3</li>
+    </ul>
+</div>
+
+<div class="drpdwn searchable shut flexible reset">
+    <span class="inpt-wrapper">
+        <input type="text" id="main-selected" disabled>
+    </span>
+    <ul class="drpdwn-optns" style="display: none;">
+        <li><input type="text" id="optns-srch"></li>
+        <li data-value="Options1">Options1</li>
+        <li data-value="Options2">Options2</li>
+        <li data-value="Options3">Options3</li>
+    </ul>
+</div>
+
+<div class="drpdwn flexible">
+    <span class="inpt-wrapper">
+        <input type="text" id="main-selected" disabled>
+    </span>
+    <ul class="drpdwn-optns" style="display: none;">
+        <li data-value="Options1">Options1</li>
+        <li data-value="Options2">Options2</li>
+        <li data-value="Options3">Options3</li>
+    </ul>
+</div>
+
+<script>
+    function initdrpdowns() {
+        document.addEventListener('click', function(event) {
+            dropdowns.forEach((dropdown) => {
+                const options = dropdown.querySelector('.drpdwn-optns');
+
+                if (options.style.display === 'block' && !dropdown.contains(event.target)) {
+                    options.style.display = 'none';
+
+                    if (dropdown.classList.contains('flexible')) {
+                        const main = dropdown.querySelector('#main-selected');
+                        main.disabled = true;
+                    }
+                }
+            });
+        });
+        const dropdowns = document.querySelectorAll('.drpdwn');
+
+        dropdowns.forEach((dropdown) => {
+            const wrapper = dropdown.querySelector('.inpt-wrapper')
+            const main = dropdown.querySelector('#main-selected')
+            const options = dropdown.querySelector('.drpdwn-optns');
+            let items = options.querySelectorAll('li');
+
+            function toggleOptions() {
+                if (options.style.display === 'none'){
+                    options.style.display = 'block';
+                    if (dropdown.classList.contains('reset')) {main.value = "";}
+                }
+                else {options.style.display = 'none';}
+            }
+            function hideOptions() {
+                options.style.display = 'none';
+                main.disabled = true;
+            }
+
+
+            if (main.disabled){
+                wrapper.addEventListener('click', toggleOptions);
+            }
+            if (dropdown.classList.contains('flexible')) {
+                console.log("Adding Event")
+                wrapper.addEventListener('click', () => {main.disabled = false;main.focus()});
+            }
+            if (dropdown.classList.contains('searchable')) {
+                items = Array.from(items).slice(1);
+                const searchBox = document.getElementById('optns-srch');
+                searchBox.addEventListener('input', () => {
+                    const searchText = searchBox.value.toLowerCase();
+                    items.forEach(item => {
+                        const option = item.textContent.toLowerCase()
+                        item.style.display = option.includes(searchText) ? 'block' : 'none';
+                   });
+                });
+            }
+
+            items.forEach(item => {
+               item.addEventListener('click', () => {
+                   main.value = item.dataset.value;
+                   dropdown.classList.contains('shut') && hideOptions();
+               });
+            });
+        });
+
+    }
+
+    initdrpdowns()
+</script>

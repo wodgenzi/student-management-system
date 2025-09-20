@@ -1,0 +1,94 @@
+{% load static %}
+        <div class="table-header">
+            <h1>Admissions</h1>
+            <div class="search-bar-wrapper">
+              <input data-name="enrollments" id="enrollment-search-bar" type="text" class="search-bar" placeholder="Search...">
+              <span class="search-icon">
+                <!-- SVG magnifying glass -->
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="11" cy="11" r="8"/>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+              </span>
+            </div>
+            <div class="button-wrapper">
+                <button class="button-01" onclick="add_data('/admissions/add-enrollment/', 'enrollment')" style="width: fit-content;">Add</button>
+                <button class="button-01" onclick="toggleDisplay(document.getElementById('enrollments-filter'))">Filter</button>
+            </div>
+            <div id="enrollments-filter" style="display: none;">
+                <form action="#" id="enrollments-filer-form">
+                <h3>Filter Results</h3>
+                <div class="status-filter-box">
+                    <h4>Status</h4>
+                    <div class="checkboxes-wrapper">
+                        <ul class="mcq-list">
+                            <li><span data-value="Completed" class="check-box {% if "Completed" in statuses %}checked{% endif %}"></span>Completed</li>
+                            <li><span data-value="Hold" class="check-box {% if "Hold" in statuses %}checked{% endif %}"></span>Hold</li>
+                            <li><span data-value="Left" class="check-box {% if "Left" in statuses %}checked{% endif %}"></span>Left</li>
+                            <li><span data-value="Pending" class="check-box {% if "Pending" in statuses %}checked{% endif %}"></span>Pending</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="range-filter-box" style="display: flex; flex-direction: column">
+                    <h4>Duration</h4>
+                        <label for="start-date">Start Date: </label>
+                        <input type="date" id="start-date" name="start-date" value="{{ start_date }}"><br>
+                        <label for="end-date">End Date: </label>
+                        <input type="date" id="end-date" name="end-date" value="{{ start_date }}"><br>
+                </div>
+                <button type="submit" value="submit">Apply</button>
+                </form>
+            </div>
+        </div>
+        <div id="enrollments-table-container" class="data-table">
+              <table id="enrollments-table">
+                <tr class="enrollment-table_header">
+                    <th onclick="sortTable('enrollment', this, 'student')">Name</th>
+                    <th onclick="sortTable('enrollment', this, 'course')">Course</th>
+                    <th onclick="sortTable('enrollment', this, 'remaining_fee')">Remaining Fee</th>
+                    <th onclick="sortTable('enrollment', this, 'paid_fee')">Paid Fee</th>
+                    <th onclick="sortTable('enrollment', this, 'status')">Status</th>
+                    <th>Actions</th>
+                </tr>
+                {% for enrollment in enrollments %}
+                    <tr id="enrollments-data-row" class="table-row" data-table="enrollment"
+                        data-id="{{ enrollment.id }}"
+                        data-search="{{ enrollment.course.name }} {{ enrollment.student.name }} {{ enrollment.status }} {{ enrollment.start_date }}"
+                        data-course="{{ enrollment.course.name }}">
+                        <td><span class="copy" data-copy="{{ enrollment.student.name }}">{{ enrollment.student.name }}</span></td>
+                        <td>{{ enrollment.course.name }}</td>
+                        <td>{{ enrollment.remaining_fee }}</td>
+                        <td><span class="user-select-none"><input class="plain" value="{{ enrollment.paid_fee }}" disabled /></span></td>
+                        <td class="enrollment-status">
+                            <div class="drpdwn fixed shut" style="width: 100%">
+                                <span class="inpt-wrapper disabled"><input class="main-selected selected disabled" type="text" data-value="{{ enrollment.status }}" value="{{ enrollment.status }}"></span>
+                                <ul class="drpdwn-optns" style="display: none;">
+                                    <li class="{% if enrollment.status == 'Pending' %}pending selected{% endif %}" data-value="Pending">Pending</li>
+                                    <li class="{% if enrollment.status == 'Hold' %}hold selected{% endif %}" data-value="Hold">Hold</li>
+                                    <li class="{% if enrollment.status == 'Completed' %}completed selected{% endif %}" data-value="Completed">Completed</li>
+                                    <li class="{% if enrollment.status == 'Left' %}selected{% endif %}" data-value="Left">Left</li>
+                                </ul>
+                            </div>
+                        </td>
+                        <td>
+                            <button class="button-02" title="View Details" onclick="toggleDetails(this)" style="padding: 5px; font-family: 'Arial',serif;">👁</button>
+                            <button class="button-02 edit-btn" title="Edit" style="padding: 5px; font-family: 'Arial',serif;">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="fs-16 iconify iconify--bx" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="m7 17.013l4.413-.015l9.632-9.54c.378-.378.586-.88.586-1.414s-.208-1.036-.586-1.414l-1.586-1.586c-.756-.756-2.075-.752-2.825-.003L7 12.583zM18.045 4.458l1.589 1.583l-1.597 1.582l-1.586-1.585zM9 13.417l6.03-5.973l1.586 1.586l-6.029 5.971L9 15.006z"></path><path fill="currentColor" d="M5 21h14c1.103 0 2-.897 2-2v-8.668l-2 2V19H8.158c-.026 0-.053.01-.079.01c-.033 0-.066-.009-.1-.01H5V5h6.847l2-2H5c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2"></path></svg>
+                            </button>
+                            <button class="button-02 save-btn" title="Save" style="padding: 5px; display: none; font-family: 'Arial',serif;">⎙</button>
+                            <button class="button-02 delete-btn" title="Delete" style="padding: 5px; font-family: 'Arial',serif;"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="fs-16 iconify iconify--bx" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M5 20a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8h2V6h-4V4a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v2H3v2h2zM9 4h6v2H9zM8 8h9v12H7V8z"></path><path fill="currentColor" d="M9 10h2v8H9zm4 0h2v8h-2z"></path></svg></button>
+                        </td>
+                    </tr>
+                    <tr class="details" style="display: none;">
+                        <td colspan="5">
+                            <strong>Father Name: </strong> {{ enrollment.student.father_name }} <br>
+                            <strong>Timing: </strong> {{ enrollment.timing }} <br>
+                            <strong>Start Date: </strong> {{ enrollment.start_date }} <br>
+                            <strong>Discount:</strong> {{ enrollment.discount }} <br>
+                            <strong>Reference: </strong> {{ enrollment.reference }}
+                        </td>
+                        <td><button class="button-01" onclick="add_data(`/admissions/add-enrollment/{{ enrollment.id }}`, 'enrollment')" style="width: auto;">Modify</button></td>
+                    </tr>
+                {% endfor %}
+              </table>
+        </div>

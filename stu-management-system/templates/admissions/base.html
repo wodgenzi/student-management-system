@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Admissions</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/admissions/style.css' %}">
+    {% block head %}{% endblock %}
+</head>
+<body>
+    {% include 'partials/notification.html' %}
+    <main>
+        {% include 'partials/navbar.html' %}
+        <div class='sc-container'>
+            {% include 'admissions/sc_sidebar.html' %}
+            <div id="sc-content">
+                <div id="main-sc-contents">
+{#                    {% include 'admissions/sc_dashboard.html' %}#}
+                    {% include 'admissions/enrollments.html' %}
+                </div>
+            </div>
+        </div>
+        {% include 'admissions/pop_ups.html' %}
+    </main>
+
+    <script src="{% static 'javascript/admissions/index.js' %}"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.2"></script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+<div id="sc-sidebar">
+    <button class="button-02" style="padding:0;position: relative;width: fit-content;top: 10px;left: 200px;" onclick="toggleSidebar()"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--bx" width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M10.707 17.707L16.414 12l-5.707-5.707l-1.414 1.414L13.586 12l-4.293 4.293z"></path></svg></button>
+    <ul class="sc-sidebar-links">
+        <li id="load-dashboard-btn"><a  href="#" hx-get="/admissions/dashboard/" hx-target="#main-sc-contents" hx-swap="innerHTML">Dashboard</a></li>
+        <li id="load-enrolment-btn"><a class="active" href="#" hx-get="/admissions/enrollments/" hx-target="#main-sc-contents" hx-swap="innerHTML">Enrollments Page</a></li>
+        <li id="load-students-btn"><a href="#" hx-get="/admissions/students/" hx-target="#main-sc-contents" hx-swap="innerHTML">Students Page</a></li>
+    </ul>
+    <span class="logged-in">Logged in as <strong>@{{ user.username }}</strong></span>
+</div>

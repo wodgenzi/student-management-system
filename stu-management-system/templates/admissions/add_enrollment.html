@@ -1,0 +1,70 @@
+<h1>{% if is_update %}Modify{% else %}Add{% endif %} Enrollment</h1>
+
+<form method="post" action="{% if is_update %}{% url 'update_enrollment_form' enrollment_id %}{% else %}{% url 'add_enrollment' %}{% endif %}">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    <div class="fieldWrapper" style="display: {% if not form.student %}none{% endif %}">
+        <div style="display: flex; align-items: center; gap: 5px">
+        {{ form.student.errors }}
+        {{ form.student.label_tag }}
+        <div class="drpdwn fixed shut searchable" id="add-student-dropdown">
+            <span class="inpt-wrapper"><input type="text" name="student" class="main-selected disabled" id="id_student" required></span>
+            <ul class="drpdwn-optns" style="display: none;">
+                <li><input type="text" id="optns-srch" placeholder="Search Options...."></li>
+                {% for value, label in form.student.field.choices|slice:"1:" %}
+                    <li class="{% if form.student.value == value %}selected{% endif %}" data-value="{{ value }}" data-label="{{ label }}">{{ label }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        </div>
+    </div>
+    <div class="fieldWrapper" style="display: {% if not form.course %}none{% endif %}">
+        {{ form.course.errors }}
+        {{ form.course.label_tag }}
+        {{ form.course }}
+    </div>
+    <div class="fieldWrapper" style="display: {% if not form.timing %}none{% endif %}">
+        {{ form.timing.errors }}
+        {{ form.timing.label_tag }}
+        {{ form.timing }}
+    </div>
+    <div class="fieldWrapper" style="display: {% if not form.start_date %}none{% endif %}">
+        {{ form.start_date.errors }}
+        {{ form.start_date.label_tag }}
+        {{ form.start_date }}
+    </div>
+    <div class="fieldWrapper" style="display: {% if not form.paid_fee %}none{% endif %}">
+        {{ form.paid_fee.errors }}
+        {{ form.paid_fee.label_tag }}
+        {{ form.paid_fee }}
+    </div>
+    <div class="fieldWrapper" style="display: {% if not form.discount %}none{% endif %}">
+        {{ form.discount.errors }}
+        {{ form.discount.label_tag }}
+        {{ form.discount }}
+    </div>
+    <div class="fieldWrapper" style="display: {% if not form.reference %}none{% endif %}">
+        <div style="display: flex; align-items: center; gap: 5px">
+        {{ form.reference.errors }}
+        {{ form.reference.label_tag }}
+        <div class="drpdwn flexible">
+            <span class="inpt-wrapper" style="display:block; cursor:pointer;">
+                <input class="main-selected disabled" type="text" value="">
+            </span>
+            <ul class="drpdwn-optns" style="display: none;">
+                <li data-value="Student">Student</li>
+                <li data-value="Sir">Sir</li>
+                <li data-value="Mam">Mam</li>
+            </ul>
+        </div>
+        </div>
+    </div>
+    <div class="fieldWrapper" style="display: {% if not form.status %}none{% endif %}">
+        {{ form.status.errors }}
+        {{ form.status.label_tag }}
+        {{ form.status }}
+    </div>
+
+    <button type="submit">{% if is_update %}Update{% else %}Add{% endif %}</button>
+</form>
+
